@@ -1,0 +1,117 @@
+<configuration
+        xmlns="http://ch.qos.logback/xml/ns/logback"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://ch.qos.logback/xml/ns/logback https://raw.githubusercontent.com/enricopulatzo/logback-XSD/master/src/main/xsd/logback.xsd"
+        debug="true" scan="true" scanPeriod="30 seconds">
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %date{ISO8601} %level %logger{0} - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <appender name="trading_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/trading.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>log/trading.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{ISO8601} %level %logger{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="spring_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/spring.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>log/spring.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{ISO8601} %level %logger{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="hibernate_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/hibernate.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>log/hibernate.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{ISO8601} %level %logger{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="exception_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/exception.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>log/exception.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{ISO8601} %level %logger{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="stats_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/stats.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>log/stats.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{ISO8601} %level %logger{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="trace_ticker_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/ticker.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>log/ticker.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{ISO8601} %level %logger{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.bitcoin.bot.log.exception" level="INFO" additivity="false">
+        <appender-ref ref="exception_file" />
+    </logger>
+
+    <logger name="com.bitcoin.bot.log.trace.ticker" level="INFO" additivity="false">
+        <appender-ref ref="trace_ticker_file" />
+        <appender-ref ref="Console" />
+    </logger>
+
+    <logger name="com.bitcoin.bot.log.stats" level="INFO" additivity="false">
+        <appender-ref ref="stats_file" />
+    </logger>
+
+    <logger name="org.springframework" level="INFO" additivity="false">
+        <appender-ref ref="spring_file" />
+        <appender-ref ref="Console" />
+    </logger>
+
+    <logger name="org.hibernate" level="INFO" additivity="false">
+        <appender-ref ref="hibernate_file" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="trading_file" />
+        <appender-ref ref="Console" />
+    </root>
+
+    <logger name="com.zaxxer.hikari" level="OFF"/>
+
+</configuration>
