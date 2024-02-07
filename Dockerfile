@@ -1,4 +1,5 @@
 FROM openjdk:11
+EXPOSE 8080
 RUN mkdir /demo
 COPY target/demo-0.0.1-SNAPSHOT.jar /demo/demo-0.0.1-SNAPSHOT.jar
 WORKDIR /demo
